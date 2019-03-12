@@ -1,4 +1,5 @@
 import grequests
+import time as tm
 
 with open("filenames") as f:
     content = f.readlines()
@@ -14,7 +15,11 @@ for name in content:
 rs = (grequests.get(u) for u in urls)
 
 total_time = 0
+
+start_time = tm.time()
 for r in grequests.map(rs):
     print(r.status_code, r.content)
     total_time += int(r.content)
+
+print("script executaion time in msec: ", (tm.time() - start_time) * 1000)
 print("total time: ", total_time)
